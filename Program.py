@@ -7,14 +7,16 @@ class Bestellung:
         self.gericht = pGericht
 
 zubereitungsschlange = []
+servierschlange = []
+alleBestellungen = []
 
 # Kontrollvariable zum Beenden des
 # Programms
 programmRunning = True
 
 while programmRunning:
-    action = input("Was wollen Sie tun? Bestellung [A]nlegen, [Z]ubereitungsliste anzeigen oder [B]eenden? ").upper()
-    if action not in "AZB" or len(action) != 1:
+    action = input("Was wollen Sie tun? Bestellung [A]nlegen, [Z]ubereitungsliste anzeigen, Gericht [F]ertig, [S]ervierliste anzeigen, Gericht ser[V]ieren, [R]echnung oder [B]eenden? ").upper()
+    if action not in "AZBFSVR" or len(action) != 1:
         print("Keine Ahnung, was Sie tun wollen.")
         continue
     # Buch anlegen
@@ -24,8 +26,27 @@ while programmRunning:
         gericht = input("Bitte Gericht eingeben: ")
         neueBestellung = Bestellung(bestellnummer, tischnummer, gericht)
         zubereitungsschlange.append(neueBestellung)
+        alleBestellungen.append(neueBestellung)
     elif action == 'Z':
         for sBestellung in zubereitungsschlange:
             print(str(sBestellung.bestellnummer) +" "+ str(sBestellung.tisch) + " " + sBestellung.gericht)
+    elif action == 'F':
+        bestellung = zubereitungsschlange.pop(0)
+        servierschlange.append(bestellung)
+    elif action == 'S':
+        for sBestellung in servierschlange:
+            print(str(sBestellung.bestellnummer) +" "+ str(sBestellung.tisch) + " " + sBestellung.gericht)
+    elif action == 'V':
+        servierschlange.pop(0)
+    elif action == 'R':
+        tisch = input("Für welchen Tisch soll die Rechnung erstellt werden? ")
+        offeneBestellungen = False
+        # Check Zubereitungsschlange
+
+        # Check Servierschlange
+
+        if offeneBestellungen == False:
+            # Rechnung erstellen
+            continue
     elif action == 'B':
         programmRunning = False
